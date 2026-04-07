@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
-using MinApp.Core.Models;
-using MinApp.Server.Repositories;
+using Core.Models;
+using ServerAPI.Repositories;
 
-namespace MinApp.Server.Controllers;
+namespace ServerAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class ItemsController : ControllerBase
 {
-    private IRepo repo;
+    private IItemRepository repo;
 
-    public ItemsController(IRepo repo)
+    public ItemsController(IItemRepository repo)
     {
         this.repo = repo;
     }

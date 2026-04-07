@@ -1,8 +1,8 @@
-using MinApp.Core.Models;
+using Core.Models;
 
-namespace MinApp.Client.Services;
+namespace WebApp.Service;
 
-public class MockService : IService
+public class ItemServiceMock : IItemService
 {
     private List<Item> mItems = new();
 

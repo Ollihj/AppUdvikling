@@ -1,4 +1,4 @@
-namespace MinApp.Client.Pages;
+namespace WebApp.Pages;
 
 public class Config
 {

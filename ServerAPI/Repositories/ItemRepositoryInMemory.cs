@@ -1,8 +1,8 @@
-using MinApp.Core.Models;
+using Core.Models;
 
-namespace MinApp.Server.Repositories;
+namespace ServerAPI.Repositories;
 
-public class MockRepo : IRepo
+public class ItemRepositoryInMemory : IItemRepository
 {
     private List<Item> mItems = new();
 

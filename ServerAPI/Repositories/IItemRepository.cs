@@ -1,8 +1,8 @@
-using MinApp.Core.Models;
+using Core.Models;
 
-namespace MinApp.Server.Repositories;
+namespace ServerAPI.Repositories;
 
-public interface IRepo
+public interface IItemRepository
 {
     Item[] GetAll();
     Item? GetById(int id);

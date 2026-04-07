@@ -1,13 +1,14 @@
 using System.Net.Http.Json;
-using MinApp.Core.Models;
+using Core.Models;
+using WebApp.Pages;
 
-namespace MinApp.Client.Services;
+namespace WebApp.Service;
 
-public class ProductionService : IService
+public class ItemServiceHttp : IItemService
 {
     private HttpClient client;
 
-    public ProductionService(HttpClient client)
+    public ItemServiceHttp(HttpClient client)
     {
         this.client = client;
     }

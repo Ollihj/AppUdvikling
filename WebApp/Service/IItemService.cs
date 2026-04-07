@@ -1,8 +1,8 @@
-using MinApp.Core.Models;
+using Core.Models;
 
-namespace MinApp.Client.Services;
+namespace WebApp.Service;
 
-public interface IService
+public interface IItemService
 {
     Task<List<Item>> GetAll();
     Task<Item?> GetById(int id);

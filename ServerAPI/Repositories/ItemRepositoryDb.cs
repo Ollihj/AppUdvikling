@@ -1,9 +1,8 @@
-using MinApp.Core.Models;
+using Core.Models;
 
-namespace MinApp.Server.Repositories;
+namespace ServerAPI.Repositories;
 
-// Stub til fremtidig databaseimplementering
-public class DbRepo : IRepo
+public class ItemRepositoryDb : IItemRepository
 {
     public Item[] GetAll() => throw new NotImplementedException();
     public Item? GetById(int id) => throw new NotImplementedException();

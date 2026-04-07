@@ -1,4 +1,4 @@
-namespace MinApp.Core.Models;
+namespace Core.Models;
 
 public class Item
 {

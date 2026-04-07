@@ -1,11 +1,11 @@
-using MinApp.Server.Repositories;
+using ServerAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
-builder.Services.AddSingleton<IRepo, MockRepo>();
+builder.Services.AddSingleton<IItemRepository, ItemRepositoryInMemory>();
 
 builder.Services.AddCors(options =>
 {
