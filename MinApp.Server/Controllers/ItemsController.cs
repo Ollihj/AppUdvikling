@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using MinApp.Core.Interfaces;
 using MinApp.Core.Models;
+using MinApp.Server.Repositories;
 
 namespace MinApp.Server.Controllers;
 
@@ -8,42 +8,43 @@ namespace MinApp.Server.Controllers;
 [Route("api/[controller]")]
 public class ItemsController : ControllerBase
 {
-    private readonly IRepo _repo;
+    private IRepo repo;
 
     public ItemsController(IRepo repo)
     {
-        _repo = repo;
+        this.repo = repo;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
-        => Ok(await _repo.GetAllAsync());
+    public Item[] GetAll() => repo.GetAll();
 
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById(int id)
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
     {
-        var item = await _repo.GetByIdAsync(id);
-        return item is null ? NotFound() : Ok(item);
+        var item = repo.GetById(id);
+        if (item is null) return NotFound();
+        return Ok(item);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Item item)
+    public IActionResult Add([FromBody] Item item)
     {
-        var created = await _repo.CreateAsync(item);
-        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        repo.Add(item);
+        return Ok(item);
     }
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] Item item)
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, [FromBody] Item item)
     {
-        var updated = await _repo.UpdateAsync(id, item);
-        return updated is null ? NotFound() : Ok(updated);
+        item.Id = id;
+        repo.Update(item);
+        return Ok(item);
     }
 
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    [HttpDelete("delete")]
+    public IActionResult DeleteById([FromQuery] int id)
     {
-        var deleted = await _repo.DeleteAsync(id);
-        return deleted ? NoContent() : NotFound();
+        repo.DeleteById(id);
+        return Ok();
     }
 }

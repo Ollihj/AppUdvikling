@@ -1,41 +1,40 @@
 using System.Net.Http.Json;
-using MinApp.Core.Interfaces;
 using MinApp.Core.Models;
 
 namespace MinApp.Client.Services;
 
 public class ProductionService : IService
 {
-    private readonly HttpClient _http;
+    private HttpClient client;
 
-    public ProductionService(HttpClient http)
+    public ProductionService(HttpClient client)
     {
-        _http = http;
+        this.client = client;
     }
 
-    public async Task<IEnumerable<Item>> GetAllAsync()
-        => await _http.GetFromJsonAsync<IEnumerable<Item>>("api/items") ?? Enumerable.Empty<Item>();
-
-    public async Task<Item?> GetByIdAsync(int id)
-        => await _http.GetFromJsonAsync<Item>($"api/items/{id}");
-
-    public async Task<Item> CreateAsync(Item item)
+    public async Task<List<Item>> GetAll()
     {
-        var response = await _http.PostAsJsonAsync("api/items", item);
-        response.EnsureSuccessStatusCode();
-        return (await response.Content.ReadFromJsonAsync<Item>())!;
+        var data = await client.GetFromJsonAsync<List<Item>>($"{Config.ServerUrl}/api/items");
+        return data ?? new List<Item>();
     }
 
-    public async Task<Item?> UpdateAsync(int id, Item item)
+    public async Task<Item?> GetById(int id)
     {
-        var response = await _http.PutAsJsonAsync($"api/items/{id}", item);
-        if (!response.IsSuccessStatusCode) return null;
-        return await response.Content.ReadFromJsonAsync<Item>();
+        return await client.GetFromJsonAsync<Item>($"{Config.ServerUrl}/api/items/{id}");
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task Add(Item item)
     {
-        var response = await _http.DeleteAsync($"api/items/{id}");
-        return response.IsSuccessStatusCode;
+        await client.PostAsJsonAsync($"{Config.ServerUrl}/api/items", item);
+    }
+
+    public async Task Update(Item item)
+    {
+        await client.PutAsJsonAsync($"{Config.ServerUrl}/api/items/{item.Id}", item);
+    }
+
+    public async Task DeleteById(int id)
+    {
+        await client.DeleteAsync($"{Config.ServerUrl}/api/items/delete?id={id}");
     }
 }

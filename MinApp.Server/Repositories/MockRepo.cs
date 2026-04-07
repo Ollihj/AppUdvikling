@@ -1,45 +1,34 @@
-using MinApp.Core.Interfaces;
 using MinApp.Core.Models;
 
 namespace MinApp.Server.Repositories;
 
 public class MockRepo : IRepo
 {
-    private readonly List<Item> _items = new()
+    private static Item[] seedData =
     {
         new Item { Id = 1, Name = "Server Item A" },
         new Item { Id = 2, Name = "Server Item B" },
         new Item { Id = 3, Name = "Server Item C" },
     };
 
-    private int _nextId = 4;
+    private List<Item> mItems = seedData.ToList();
 
-    public Task<IEnumerable<Item>> GetAllAsync()
-        => Task.FromResult<IEnumerable<Item>>(_items);
+    public Item[] GetAll() => mItems.ToArray();
 
-    public Task<Item?> GetByIdAsync(int id)
-        => Task.FromResult(_items.FirstOrDefault(i => i.Id == id));
+    public Item? GetById(int id) => mItems.FirstOrDefault(i => i.Id == id);
 
-    public Task<Item> CreateAsync(Item item)
+    public void Add(Item item)
     {
-        item.Id = _nextId++;
-        _items.Add(item);
-        return Task.FromResult(item);
+        item.Id = Random.Shared.Next();
+        mItems.Add(item);
     }
 
-    public Task<Item?> UpdateAsync(int id, Item item)
+    public void Update(Item item)
     {
-        var existing = _items.FirstOrDefault(i => i.Id == id);
-        if (existing is null) return Task.FromResult<Item?>(null);
-        existing.Name = item.Name;
-        return Task.FromResult<Item?>(existing);
+        var existing = mItems.FirstOrDefault(i => i.Id == item.Id);
+        if (existing is not null)
+            existing.Name = item.Name;
     }
 
-    public Task<bool> DeleteAsync(int id)
-    {
-        var existing = _items.FirstOrDefault(i => i.Id == id);
-        if (existing is null) return Task.FromResult(false);
-        _items.Remove(existing);
-        return Task.FromResult(true);
-    }
+    public void DeleteById(int id) => mItems.RemoveAll(i => i.Id == id);
 }

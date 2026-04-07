@@ -1,4 +1,3 @@
-using MinApp.Core.Interfaces;
 using MinApp.Server.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,23 +5,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
-// CORS: tillad Blazor WASM klient (standard dev-port 5001 / 7xxx)
+builder.Services.AddSingleton<IRepo, MockRepo>();
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("BlazorClient", policy =>
+    options.AddPolicy("policy", policy =>
     {
-        policy.WithOrigins(
-                "https://localhost:7000",
-                "http://localhost:5000",
-                "https://localhost:7001",
-                "http://localhost:5001")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.AllowAnyOrigin();
+        policy.AllowAnyMethod();
+        policy.AllowAnyHeader();
     });
 });
-
-// Brug MockRepo under udvikling - skift til DbRepo for database
-builder.Services.AddScoped<IRepo, MockRepo>();
 
 var app = builder.Build();
 
@@ -32,7 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("BlazorClient");
+app.UseCors("policy");
 app.UseAuthorization();
 app.MapControllers();
 
