@@ -4,12 +4,7 @@ namespace MinApp.Client.Services;
 
 public class MockService : IService
 {
-    private List<Item> mItems = new()
-    {
-        new Item { Id = 1, Name = "Testitem A" },
-        new Item { Id = 2, Name = "Testitem B" },
-        new Item { Id = 3, Name = "Testitem C" },
-    };
+    private List<Item> mItems = new();
 
     public async Task<List<Item>> GetAll() => mItems;
 
@@ -24,8 +19,7 @@ public class MockService : IService
     public async Task Update(Item item)
     {
         var existing = mItems.FirstOrDefault(i => i.Id == item.Id);
-        if (existing is not null)
-            existing.Name = item.Name;
+        if (existing is not null) existing.Name = item.Name;
     }
 
     public async Task DeleteById(int id) => mItems.RemoveAll(i => i.Id == id);

@@ -4,14 +4,7 @@ namespace MinApp.Server.Repositories;
 
 public class MockRepo : IRepo
 {
-    private static Item[] seedData =
-    {
-        new Item { Id = 1, Name = "Server Item A" },
-        new Item { Id = 2, Name = "Server Item B" },
-        new Item { Id = 3, Name = "Server Item C" },
-    };
-
-    private List<Item> mItems = seedData.ToList();
+    private List<Item> mItems = new();
 
     public Item[] GetAll() => mItems.ToArray();
 
@@ -26,8 +19,7 @@ public class MockRepo : IRepo
     public void Update(Item item)
     {
         var existing = mItems.FirstOrDefault(i => i.Id == item.Id);
-        if (existing is not null)
-            existing.Name = item.Name;
+        if (existing is not null) existing.Name = item.Name;
     }
 
     public void DeleteById(int id) => mItems.RemoveAll(i => i.Id == id);
