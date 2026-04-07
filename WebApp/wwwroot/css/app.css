@@ -1,0 +1,13 @@
+#blazor-error-ui {
+    display: none;
+}
+
+#blazor-error-ui[blazor-error-ui-open] {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #ffcc00;
+    padding: 10px;
+    text-align: center;
+}
