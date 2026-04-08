@@ -5,38 +5,39 @@
 @inject ILocalStorageService localStorage
 
 
-<h1 class="mb-3 mt-3">Products</h1>
+<h1 class="mb-3 mt-3">Tøj</h1>
 
-<button class="btn btn-primary mb-3" @onclick="ShowModal">Add Product</button>
+<button class="btn btn-primary mb-3" @onclick="ShowModal">Tilføj et stykke tøj</button>
 
 @if (isModalOpen)
 {
     <div class="modal-backdrop">
         <div class="modal-box">
-            <h3>Create Product</h3>
+            <h3>Opret tøj</h3>
 
             <EditForm Model="@aProduct" OnValidSubmit="@HandleSubmit">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
                 <div class="mb-2">
-                    <InputText @bind-Value="aProduct.Name" placeholder="Name" class="form-control" />
+                    <InputText @bind-Value="aProduct.Type" placeholder="Type" class="form-control" />
                 </div>
 
                 <div class="mb-2">
-                    <InputNumber @bind-Value="aProduct.Price" class="form-control" />
+                    <InputText @bind-Value="aProduct.Størrelse" placeholder="Størrelse" class="form-control" />
                 </div>
 
                 <div class="mb-2">
-                    <InputDate @bind-Value="aProduct.PublishedDate" class="form-control" />
+                    <InputTextArea @bind-Value="aProduct.Description" placeholder="Beskrivelse" class="form-control" />
                 </div>
-
+                
                 <div class="mb-2">
-                    <InputTextArea @bind-Value="aProduct.Description" class="form-control" />
+                    <label for="ErLedig">Er ledig</label>
+                    <InputCheckbox id="ErLedig" @bind-Value="aProduct.ErLedig" class="form-check-input" />
                 </div>
 
-                <button type="submit" class="btn btn-success me-2">Save</button>
-                <button type="button" class="btn btn-secondary" @onclick="CloseModal">Cancel</button>
+                <button type="submit" class="btn btn-success me-2">Gem</button>
+                <button type="button" class="btn btn-secondary" @onclick="CloseModal">Annuller</button>
             </EditForm>
         </div>
     </div>
@@ -75,22 +76,3 @@
         isModalOpen = false;
     }
 }
-
-<style>
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-}
-
-.modal-box {
-    background: white;
-    padding: 20px;
-    margin: 100px auto;
-    width: 300px;
-    border-radius: 10px;
-}
-</style>
