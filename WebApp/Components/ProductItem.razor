@@ -1,0 +1,12 @@
+@using WebApp.Model
+
+<div class="card p-2 mb-2">
+    <h5>@Product.Name</h5>
+    <p>@Product.Description</p>
+    <p>Price: @Product.Price kr</p>
+</div>
+
+@code {
+    [Parameter]
+    public Product Product { get; set; }
+}
