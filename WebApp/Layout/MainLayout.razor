@@ -1,9 +1,30 @@
+@using WebApp.Model
+@inject Blazored.SessionStorage.ISessionStorageService localstorage
 @inherits LayoutComponentBase
 
 <div class="page">
+    
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+    
     <main>
+        <div class="top-row px-4">
+            <i>Logged in as: <b>@LoggedInText</b> </i>
+        </div>
+
         <article class="content px-4">
             @Body
         </article>
     </main>
 </div>
+@code
+{
+    User? loggedIn;
+    protected override async Task OnInitializedAsync()
+    {
+        loggedIn = await localstorage.GetItemAsync<User?>("user");
+    }
+
+    private string LoggedInText => loggedIn is null ? "none" : $"{loggedIn.Name} [{loggedIn.Role}]";
+}
