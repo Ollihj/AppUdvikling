@@ -9,6 +9,10 @@
     background-color: #E6579A;
     padding: 2rem;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 h3 {
