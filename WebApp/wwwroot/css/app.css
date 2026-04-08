@@ -1,3 +1,7 @@
+body {
+    background-color: #F283B6;
+}
+
 #blazor-error-ui {
     display: none;
 }
