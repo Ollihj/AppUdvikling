@@ -4,7 +4,7 @@
     max-width: 420px;
     width: 315px;
     margin: 5rem auto;
-    background-color: #AAAAAA;
+    background-color: red;
     padding: 2rem;
     border-radius: 10px;
 }
@@ -12,6 +12,7 @@
 h3 {
     text-align: center;
     margin-bottom: 1.5rem;
+    color: mediumvioletred;
 }
 
 

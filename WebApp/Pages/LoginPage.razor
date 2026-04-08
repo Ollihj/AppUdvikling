@@ -14,17 +14,17 @@
 
     <div class="login-container">
 
-        <InputText @bind-Value="username" 
+        <InputText @bind-Value="username"
                    class="form-control mb-2"
                    placeholder="Indtast brugernavn"/>
-            
+
 
                 <InputText
                            type="password"
                            class="form-control mb-2"
                            @bind-Value="password"
                            placeholder="Indtast password"/>
-            
+
             <div style="text-align: center">
                 <button class="btn btn-primary" @onclick="OnClickLogin">Login</button>
             </div>
