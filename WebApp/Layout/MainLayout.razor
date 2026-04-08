@@ -12,7 +12,10 @@
     <main>
         <div class="top-row px-4">
             <i>Logged in as: <b>@LoggedInText</b> </i>
-            <button class="btn btn-sm btn-outline-secondary ms-3" @onclick="Logout">Log ud</button>
+            @if (navManager.Uri != navManager.BaseUri + "login")
+            {
+                <button class="btn btn-sm btn-outline-secondary ms-3" @onclick="Logout">Log ud</button>
+            }
         </div>
 
         <article class="content px-4">
