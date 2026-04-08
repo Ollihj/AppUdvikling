@@ -1,5 +1,6 @@
 @using WebApp.Model
-@inject Blazored.SessionStorage.ISessionStorageService localstorage
+@inject Blazored.LocalStorage.ILocalStorageService localstorage
+@inject NavigationManager navManager
 @inherits LayoutComponentBase
 
 <div class="page">
@@ -11,6 +12,7 @@
     <main>
         <div class="top-row px-4">
             <i>Logged in as: <b>@LoggedInText</b> </i>
+            <button class="btn btn-sm btn-outline-secondary ms-3" @onclick="Logout">Log ud</button>
         </div>
 
         <article class="content px-4">
@@ -27,4 +29,10 @@
     }
 
     private string LoggedInText => loggedIn is null ? "none" : $"{loggedIn.Name} [{loggedIn.Role}]";
+
+    private async Task Logout()
+    {
+        await localstorage.RemoveItemAsync("user");
+        navManager.NavigateTo("/login", true);
+    }
 }
