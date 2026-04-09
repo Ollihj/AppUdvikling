@@ -4,6 +4,7 @@
     <h5>@Item.Type</h5>
     <p>@Item.Description</p>
     <p>Størrelse: @Item.Størrelse</p>
+    <p>Status: @(Item.ErLedig ? "Ledig" : "Ikke ledig")</p>
 </div>
 
 @code {
