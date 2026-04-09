@@ -1,0 +1,39 @@
+﻿@page "/opretbruger"
+@using Blazored.LocalStorage
+@using WebApp.Model
+@inject LoginService loginService
+@inject NavigationManager navManager
+@inject ILocalStorageService localStorage
+
+<h3>Opret bruger</h3>
+
+<div>
+    <InputText @bind-Value="username" placeholder="Brugernavn" class="form-control mb-2" />
+    <InputText @bind-Value="password" type="password" placeholder="Password" class="form-control mb-2" />
+    <button class="btn btn-primary" @onclick="OnClickOpret">Opret</button>
+</div>
+
+@if (!string.IsNullOrEmpty(errorText))
+{
+    <p>@errorText</p>
+}
+
+@code {
+    private string username = "";
+    private string password = "";
+    private string errorText = "";
+
+    private async Task OnClickOpret()
+    {
+        User? newUser = loginService.Register(username, password);
+        if (newUser != null)
+        {
+            await localStorage.SetItemAsync("user", newUser);
+            navManager.NavigateTo("/");
+        }
+        else
+        {
+            errorText = "Brugernavnet er allerede taget.";
+        }
+    }
+}

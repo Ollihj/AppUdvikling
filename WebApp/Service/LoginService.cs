@@ -34,4 +34,17 @@ public class LoginService
         return null;
     }
     
+    public User? Register(string name, string password)
+    {
+        foreach (User u in mUsers)
+        {
+            if (u.Name == name)
+                return null;
+        }
+
+        User newUser = new User { Name = name, Password = password, Role = "user" };
+        mUsers.Add(newUser);
+        return newUser;
+    }
+    
 }
