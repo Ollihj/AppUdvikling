@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WebApp;
 using WebApp.Service;
+using WebApp.Pages;
 
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
@@ -16,7 +17,8 @@ builder.Services.AddBlazoredSessionStorage();
 builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 // Skift ItemServiceMock til ItemServiceHttp for at tale med server
-builder.Services.AddSingleton<IItemService, ItemServiceMock>();
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(Config.ServerUrl) });
+builder.Services.AddScoped<IItemService, ItemServiceHttp>();
 builder.Services.AddSingleton<LoginService>();
 
 await builder.Build().RunAsync();

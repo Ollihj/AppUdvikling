@@ -1,12 +1,12 @@
-@using WebApp.Model
+@using Core.Models
 
 <div class="card p-2 mb-2">
-    <h5>@Product.Type</h5>
-    <p>@Product.Description</p>
-    <p>Størrelse: @Product.Størrelse </p>
+    <h5>@Item.Type</h5>
+    <p>@Item.Description</p>
+    <p>Størrelse: @Item.Størrelse</p>
 </div>
 
 @code {
     [Parameter]
-    public Product Product { get; set; }
+    public Item Item { get; set; }
 }

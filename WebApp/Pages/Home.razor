@@ -3,15 +3,16 @@
 @using WebApp.Model
 @inject NavigationManager navManager
 @inject ILocalStorageService localStorage
+@inject IItemService itemService
 
 
 <h1 class="mb-3 mt-3">Tøj</h1>
 
 <button class="btn btn-primary mb-3" @onclick="ShowModal">Tilføj et stykke tøj</button>
 
-@foreach (var product in products)
+@foreach (var item in items)
 {
-    <ProductItem Product="product" />
+    <ProductItem Item="item" />
 }
 
 @if (isModalOpen)
@@ -20,25 +21,25 @@
         <div class="modal-box">
             <h3>Opret tøj</h3>
 
-            <EditForm Model="@aProduct" OnValidSubmit="@HandleSubmit">
+            <EditForm Model="@aItem" OnValidSubmit="@HandleSubmit">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
                 <div class="mb-2">
-                    <InputText @bind-Value="aProduct.Type" placeholder="Type" class="form-control" />
+                    <InputText @bind-Value="aItem.Type" placeholder="Type" class="form-control" />
                 </div>
 
                 <div class="mb-2">
-                    <InputText @bind-Value="aProduct.Størrelse" placeholder="Størrelse" class="form-control" />
+                    <InputText @bind-Value="aItem.Størrelse" placeholder="Størrelse" class="form-control" />
                 </div>
 
                 <div class="mb-2">
-                    <InputTextArea @bind-Value="aProduct.Description" placeholder="Beskrivelse" class="form-control" />
+                    <InputTextArea @bind-Value="aItem.Description" placeholder="Beskrivelse" class="form-control" />
                 </div>
-                
+
                 <div class="mb-2">
                     <label for="ErLedig">Er ledig</label>
-                    <InputCheckbox id="ErLedig" @bind-Value="aProduct.ErLedig" class="form-check-input" />
+                    <InputCheckbox id="ErLedig" @bind-Value="aItem.ErLedig" class="form-check-input" />
                 </div>
 
                 <button type="submit" class="btn btn-success me-2">Gem</button>
@@ -49,10 +50,10 @@
 }
 
 @code {
-    private Product aProduct = new();
+    private Item aItem = new();
     private bool isModalOpen = false;
-    
-    private List<Product> products = new();
+
+    private List<Item> items = new();
     protected override async Task OnInitializedAsync()
     {
         var user = await localStorage.GetItemAsync<User>("user");
@@ -60,7 +61,7 @@
         {
             navManager.NavigateTo("/login");
         }
-        products = await localStorage.GetItemAsync<List<Product>>("products") ?? new();
+        items = await itemService.GetAll();
     }
     
     private void ShowModal()
@@ -75,10 +76,10 @@
 
     private async Task HandleSubmit()
     {
-        products.Add(aProduct);
-        await localStorage.SetItemAsync("products", products);
+        await itemService.Add(aItem);
+        items = await itemService.GetAll();
 
-        aProduct = new Product();
+        aItem = new Item();
         isModalOpen = false;
     }
 }
