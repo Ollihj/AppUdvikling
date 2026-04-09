@@ -4,9 +4,10 @@ namespace ServerAPI.Repositories;
 
 public interface IItemRepository
 {
-    Item[] GetAll();
-    Item? GetById(int id);
-    void Add(Item item);
-    void Update(Item item);
+
+    List<Item> GetAll();
+    Item Add(Item item);
+    Item Toggle(int id);
     void DeleteById(int id);
+
 }

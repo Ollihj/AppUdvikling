@@ -8,8 +8,7 @@ namespace ServerAPI.Controllers;
 [Route("Home")]
 public class ItemsController : ControllerBase
 {
-    private ItemRepositoryDb ItemsRepo;
-
+    private readonly IItemRepository ItemsRepo;
 
     public ItemsController(IItemRepository repo)
     {
@@ -28,15 +27,13 @@ public class ItemsController : ControllerBase
         ItemsRepo.Add(item);
     }
 
-    [HttpDelete]
-    [Route("{id}")]
+    [HttpDelete("{id}")]
     public void Delete(int id)
     {
         ItemsRepo.DeleteById(id);
     }
 
-    [HttpPut]
-    [Route("{id}")]
+    [HttpPut("{id}")]
     public Item Toggle(int id)
     {
         return ItemsRepo.Toggle(id);

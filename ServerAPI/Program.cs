@@ -6,6 +6,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddSingleton<IItemRepository, ItemRepositoryInMemory>();
+builder.Services.AddSingleton<IItemRepository, ItemRepositoryDb>();
 
 builder.Services.AddCors(options =>
 {

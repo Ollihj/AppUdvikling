@@ -19,7 +19,7 @@ public class ItemServiceMock : IItemService
     public async Task Update(Item item)
     {
         var existing = mItems.FirstOrDefault(i => i.Id == item.Id);
-        if (existing is not null) existing.Name = item.Name;
+        if (existing is not null) existing.Type = item.Type;
     }
 
     public async Task DeleteById(int id) => mItems.RemoveAll(i => i.Id == id);

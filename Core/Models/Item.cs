@@ -4,6 +4,8 @@ namespace Core.Models;
 
 public class Item
 {
+    public int Id { get; set; }
+    
     [Required]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Typen skal være mellem 2 og 50 tegn.")]
     public string? Type { get; set; }
