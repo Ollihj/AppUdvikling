@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Core.Models;
 
+[BsonIgnoreExtraElements]
 public class Item
 {
     public int Id { get; set; }
