@@ -9,6 +9,11 @@
 
 <button class="btn btn-primary mb-3" @onclick="ShowModal">Tilføj et stykke tøj</button>
 
+@foreach (var product in products)
+{
+    <ProductItem Product="product" />
+}
+
 @if (isModalOpen)
 {
     <div class="modal-backdrop">
@@ -55,6 +60,7 @@
         {
             navManager.NavigateTo("/login");
         }
+        products = await localStorage.GetItemAsync<List<Product>>("products") ?? new();
     }
     
     private void ShowModal()
