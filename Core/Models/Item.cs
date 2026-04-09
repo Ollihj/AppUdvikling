@@ -1,7 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Core.Models;
 
 public class Item
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    [Required]
+    [StringLength(50, MinimumLength = 2, ErrorMessage = "Typen skal være mellem 2 og 50 tegn.")]
+    public string? Type { get; set; }
+
+    [Required] public string? Størrelse { get; set; }
+
+    [Required] public string? Description { get; set; }
+
+    public bool ErLedig { get; set; }
 }

@@ -5,46 +5,40 @@ using ServerAPI.Repositories;
 namespace ServerAPI.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("Home")]
 public class ItemsController : ControllerBase
 {
-    private IItemRepository repo;
+    private ItemRepositoryDb ItemsRepo;
+
 
     public ItemsController(IItemRepository repo)
     {
-        this.repo = repo;
+        ItemsRepo = repo;
     }
 
     [HttpGet]
-    public Item[] GetAll() => repo.GetAll();
-
-    [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public List<Item> GetAll()
     {
-        var item = repo.GetById(id);
-        if (item is null) return NotFound();
-        return Ok(item);
+        return ItemsRepo.GetAll();
     }
 
     [HttpPost]
-    public IActionResult Add([FromBody] Item item)
+    public void Add(Item item)
     {
-        repo.Add(item);
-        return Ok(item);
+        ItemsRepo.Add(item);
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] Item item)
+    [HttpDelete]
+    [Route("{id}")]
+    public void Delete(int id)
     {
-        item.Id = id;
-        repo.Update(item);
-        return Ok(item);
+        ItemsRepo.DeleteById(id);
     }
 
-    [HttpDelete("delete")]
-    public IActionResult DeleteById([FromQuery] int id)
+    [HttpPut]
+    [Route("{id}")]
+    public Item Toggle(int id)
     {
-        repo.DeleteById(id);
-        return Ok();
+        return ItemsRepo.Toggle(id);
     }
 }
